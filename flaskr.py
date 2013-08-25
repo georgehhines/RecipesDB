@@ -62,7 +62,7 @@ def show_entries():
     db = get_db()
     cur = db.execute('select name, mess from dish order by id desc')
     entries = cur.fetchall()
-    return render_template('show_entries.html', entries=entries)
+    return render_template('show_entries.html', entries=entries, ingredients=[])
 
 
 @app.route('/add', methods=['POST'])
@@ -72,6 +72,8 @@ def add_entry():
     db = get_db()
     db.execute('insert into dish (name, mess) values (?, ?)',
                  [request.form['name'], request.form['mess']])
+    db.execute('insert into ingredients (name) values (?)',
+                 [request.form['ingredient1']])
     db.commit()
     flash('New dish was successfully posted')
     return redirect(url_for('show_entries'))
