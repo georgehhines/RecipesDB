@@ -70,10 +70,12 @@ def add_entry():
     if not session.get('logged_in'):
         abort(401)
     db = get_db()
-    db.execute('insert into dish (name, mess) values (?, ?)',
+    c = db.cursor()
+    c.execute('insert into dish (name, mess) values (?, ?)',
                  [request.form['name'], request.form['mess']])
-    db.execute('insert into ingredients (name) values (?)',
-                 [request.form['ingredient1']])
+    dishid = c.lastrowid
+    db.execute('insert into ingredients (name, dish) values (?, ?)',
+                 [request.form['ingredient1'], dishid])
     db.commit()
     flash('New dish was successfully posted')
     return redirect(url_for('show_entries'))

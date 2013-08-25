@@ -12,6 +12,7 @@ drop table if exists ingredients;
 create table ingredients (
   id integer primary key autoincrement,
   name text not null,
+  dish integer,
   cost text,
   accessibility text,
   quantity text,
