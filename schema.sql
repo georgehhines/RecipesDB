@@ -1,6 +1,9 @@
-drop table if exists entries;
-create table entries (
+drop table if exists dish;
+create table dish (
   id integer primary key autoincrement,
-  title text not null,
-  text text not null
+  name text not null,
+  mess text,
+  time text,
+  cost text,
+  servings text
 );
